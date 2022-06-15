@@ -555,4 +555,9 @@ class StreamApplicationTests {
         List<String> list3 = Stream.concat(stream7,stream8).distinct().skip(2).limit(5).collect(Collectors.toList());
         System.out.println("合并去重跳过前两个数据取五个数据：" + list3);
     }
+
+    @Test
+    void test27() {
+
+    }
 }
