@@ -510,4 +510,49 @@ class StreamApplicationTests {
 
         System.out.println("先按工资再按年龄自定义降序排序：" + newList4);
     }
+
+    // 去重、合并(distinct、skip、limit)，流也可以进行合并、去重、限制、跳过等操作
+    @Test
+    void test26() {
+        String[] arr1 = {"a","b","c","d"};
+        String[] arr2 = {"d","e","f","g"};
+        Stream<String> stream1 = Stream.of(arr1);
+        Stream<String> stream2 = Stream.of(arr2);
+
+        // concat:合并两个流distinct：去重
+        List<String> list = Stream.concat(stream1,stream2).distinct().collect(Collectors.toList());
+        System.out.println("流合并：" + list);
+
+        // limit: 限制从流中获得前n个数据
+        List<Integer> collect = Stream.iterate(1,x -> x + 2).limit(10).collect(Collectors.toList());
+        System.out.println("limit：" + collect);
+
+        // 去重合并取前五个数据
+        String[] arr3 = {"a","b","c","d"};
+        String[] arr4 = {"d","e","f","g"};
+        Stream<String> stream3 = Stream.of(arr3);
+        Stream<String> stream4 = Stream.of(arr4);
+        List<String> list1 = Stream.concat(stream3,stream4).distinct().limit(5).collect(Collectors.toList());
+        System.out.println("去重合并取前两个数据：" + list1);
+
+        // skip：跳过前n个数据，这里1代表把1代入后边的计算表达式
+        List<Integer> collect2 = Stream.iterate(1,x -> x + 2).skip(2).limit(5).collect(Collectors.toList());
+        System.out.println("skip：" + collect2);
+
+        // 合并去重取前五个数据并跳过前两个数据
+        String[] arr5 = {"a","b","c","d"};
+        String[] arr6 = {"d","e","f","g"};
+        Stream<String> stream5 = Stream.of(arr5);
+        Stream<String> stream6 = Stream.of(arr6);
+        List<String> list2 = Stream.concat(stream5,stream6).distinct().limit(5).skip(2).collect(Collectors.toList());
+        System.out.println("合并去重取前五个数据并跳过前两个数据：" + list2);
+
+        // 合并去重跳过前两个数据取五个数据
+        String[] arr7 = {"a","b","c","d"};
+        String[] arr8 = {"d","e","f","g"};
+        Stream<String> stream7 = Stream.of(arr7);
+        Stream<String> stream8 = Stream.of(arr8);
+        List<String> list3 = Stream.concat(stream7,stream8).distinct().skip(2).limit(5).collect(Collectors.toList());
+        System.out.println("合并去重跳过前两个数据取五个数据：" + list3);
+    }
 }
